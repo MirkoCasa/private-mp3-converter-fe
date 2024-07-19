@@ -1,0 +1,12 @@
+.img-container {
+    padding: 2%;
+}
+
+.img-container img {
+    max-width: 50%;
+}
+
+.input-container {
+    max-width: 100%;
+    text-align: center;
+}
