@@ -1,5 +1,3 @@
-const hostname = 'https://private-mp3-converter-a578b023d692.herokuapp.com/';
-
 let url, videoInformations;
 
 const downloadBtn = document.getElementById("downloadBtn");
@@ -15,7 +13,7 @@ function download() {
       <span class="visually-hidden">Loading...</span>
   </div>
   `
-  fetch(`${hostname}download?url=${url}`)
+  fetch(`${window.env.serverURL}/download?url=${url}`)
     .then(res => {
         if(!res.ok) {
             throw new Error(`ERROR: ${res.statusText}`)
@@ -38,14 +36,14 @@ function download() {
     });
 }
 
-function getInfos() {
+async function getInfos() {
     url = input.value;
     downloadBtn.innerHTML = `
     <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>
     `
-    fetch(`${hostname}info?url=${url}`)
+    await fetch(`${window.env.serverURL}/info?url=${url}`)
         .then(res => {
             if(!res.ok) {
                 throw new Error(`ERROR: ${res.statusText}`)
@@ -62,16 +60,13 @@ function getInfos() {
             downloadBtn.innerHTML = 'Convert'
             console.log(err);
         });
-}
 
-function getTitle() {
-    let title
-    try {
-        title = videoInformations.videoDetails.title;
-    } catch (err) {
-        title = videoInformations.videoDetails.videoId;
-    }
-    return title 
+    const title = document.getElementById('title');
+    title.innerText = videoInformations.videoDetails.title;
+
+    const thumbnail = document.getElementById('thumbnailImg');
+    thumbnail.setAttribute('src', videoInformations.videoDetails.thumbnails[4].url);
+    thumbnail.classList.remove('hidden');
 }
 
 function onInputChange() {
@@ -83,3 +78,5 @@ function onInputChange() {
         downloadBtn.removeAttribute('disabled');
     }
 }
+
+

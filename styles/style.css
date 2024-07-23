@@ -10,3 +10,16 @@
     max-width: 100%;
     text-align: center;
 }
+
+#downloadBtn {
+    width: 20%;
+    padding: 1%;
+}
+
+.title {
+    padding: 5px;
+}
+
+.hidden {
+    display: none;
+}
